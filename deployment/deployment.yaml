@@ -1,33 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpd-deployment
+  name: my-deployment-np
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: httpd
-  replicas: 4
+      app: my-app-np
   template:
     metadata:
       labels:
-        app: httpd
+        app: my-app-np
     spec:
       containers:
-      - name: httpd
-        image: httpd
+      - name: my-container
+        image: nginx:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: httpd-service
+  name: my-app-np
+  labels:
+    app: my-app-np
 spec:
-  selector:
-    app: httpd-app
-  ports:  
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-      name: httpd-port
   type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: my-app-np
