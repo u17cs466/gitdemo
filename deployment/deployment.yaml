@@ -29,6 +29,7 @@ spec:
   ports:
   - port: 80
     targetPort: 80
+    nodePort: 30020
     protocol: TCP
   selector:
     app: my-app-np
